@@ -1,4 +1,11 @@
+<%@ page import="com.example.webapphr1_2023.Beans.Job" %>
+<%@ page import="com.example.webapphr1_2023.Beans.Employee" %>
+<%@ page import="com.example.webapphr1_2023.Beans.Department" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<jsp:useBean id="listaEmpleados" type="java.util.ArrayList<com.example.webapphr1_2023.Beans.Employee>" scope="request"/>
+<jsp:useBean id="listaTrabajos" type="java.util.ArrayList<com.example.webapphr1_2023.Beans.Job>" scope="request"/>
+<jsp:useBean id="listaDepartamentos" type="java.util.ArrayList<com.example.webapphr1_2023.Beans.Department>"
+             scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,7 +39,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="job_id">Job</label>
-                    <input type="text" class="form-control form-control-sm" name="job_id" id="job_id">
+                    <select class="form-select" name="job_id">
+                        <% for (Job job : listaTrabajos) { %>
+                        <option value="<%=job.getJobId()%>">
+                            <%=job.getJobTitle()%>
+                        </option>
+                        <% } %>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="salary">Salary</label>
@@ -44,11 +57,25 @@
                 </div>
                 <div class="mb-3">
                     <label for="manager_id">Manager</label>
-                    <input type="text" class="form-control form-control-sm" name="manager_id" id="manager_id">
+                    <select class="form-select" name="manager_id">
+                        <option value="0">--Sin jefe--</option>
+                        <% for (Employee employee : listaEmpleados) { %>
+                        <option value="<%=employee.getEmployeeId() %>">
+                            <%=employee.getNombreCompleto()%>
+                        </option>
+                        <% } %>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="department_id">Department</label>
-                    <input type="text" class="form-control form-control-sm" name="department_id" id="department_id">
+                    <select class="form-select" name="department_id">
+                        <option value="0">--Sin departamento--</option>
+                        <% for (Department department : listaDepartamentos) { %>
+                        <option value="<%=department.getDepartmentId()%>">
+                            <%=department.getDepartmentName()%>
+                        </option>
+                        <% } %>
+                    </select>
                 </div>
                 <a href="<%= request.getContextPath()%>/EmployeeServlet" class="btn btn-danger">Cancelar</a>
                 <input type="submit" value="Guardar" class="btn btn-primary"/>

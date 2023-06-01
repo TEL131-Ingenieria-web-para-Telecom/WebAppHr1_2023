@@ -1,6 +1,9 @@
 package com.example.webapphr1_2023.Controllers;
 
 import com.example.webapphr1_2023.Beans.Job;
+import com.example.webapphr1_2023.Daos.BaseDao;
+import com.example.webapphr1_2023.Daos.DepartmentDao;
+import com.example.webapphr1_2023.Daos.EmployeeDao;
 import com.example.webapphr1_2023.Daos.JobDao;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,6 +24,8 @@ public class JobServlet extends HttpServlet {
 
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         JobDao jobDao = new JobDao();
+        EmployeeDao employeeDao = new EmployeeDao();
+        DepartmentDao departmentDao = new DepartmentDao();
 
         if (action.equalsIgnoreCase("crear")) {
             String jobId = request.getParameter("jobId");

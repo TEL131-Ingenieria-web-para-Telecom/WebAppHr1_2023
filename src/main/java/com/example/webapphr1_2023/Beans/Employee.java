@@ -10,11 +10,11 @@ public class Employee {
     private String email;
     private String phoneNumber;
     private String hireDate;
-    private String jobId;
+    private Job job;
     private BigDecimal salary;
     private BigDecimal commissionPct;
-    private int managerId;
-    private int departmentId;
+    private Employee manager;
+    private Department department;
 
     public String getFullName(){
         return firstName + " " + lastName;
@@ -133,27 +133,31 @@ public class Employee {
         this.commissionPct = commissionPct;
     }
 
-    public String getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
-    public int getManagerId() {
-        return managerId;
+    public Employee getManager() {
+        return manager;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public String getNombreCompleto(){
+        return firstName + " " + lastName;
     }
 }

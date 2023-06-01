@@ -1,8 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' />
+        <link rel='stylesheet' href='<%=request.getContextPath()%>/recursos/css/bootstrap.min.css'/>
         <title>Lista empleados</title>
     </head>
     <body>
@@ -15,6 +16,8 @@
             </nav>
             <a href="EmployeeServlet" class="btn btn-primary mb-4">Ir a la lista de empleados</a>
             <a href="JobServlet" class="btn btn-primary mb-4">Ir a la lista de trabajos</a>
+            <img src="<%=request.getContextPath()%>/recursos/images/panda.jpg" width="100px" height="100px"/>
         </div>
     </body>
 </html>
+

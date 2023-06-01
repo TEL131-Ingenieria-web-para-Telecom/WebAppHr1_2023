@@ -7,18 +7,12 @@ import com.example.webapphr1_2023.Beans.Job;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class JobDao {
+public class JobDao extends BaseDao{
 
     public ArrayList<Job> obtenerListaTrabajos() {
         ArrayList<Job> listaTrabajos = new ArrayList<>();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hr", "root", "root");
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM jobs");) {
 
@@ -42,14 +36,8 @@ public class JobDao {
 
     public void crearTrabajo(String jobId, String jobTitle, int minSalary, int maxSalary) {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "INSERT INTO jobs (job_id,job_title,min_salary,max_salary) VALUES (?,?,?,?)";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hr", "root", "root");
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, jobId);
             pstmt.setString(2, jobTitle);
@@ -63,16 +51,10 @@ public class JobDao {
 
     public Job obtenerTrabajo(String jobId) {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         Job job = null;
 
         String sql = "SELECT * FROM jobs WHERE job_id = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hr", "root", "root");
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, jobId);
 
@@ -94,15 +76,9 @@ public class JobDao {
 
     public void actualizarTrabajo(String jobId, String jobTitle, int minSalary, int maxSalary) {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "UPDATE jobs SET job_title = ?, min_salary = ?, max_salary = ? "
                 + "WHERE job_id = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hr", "root", "root");
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, jobTitle);
             pstmt.setInt(2, minSalary);
@@ -116,14 +92,8 @@ public class JobDao {
 
     public void borrarTrabajo(String jobId) {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "DELETE FROM jobs WHERE job_id = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hr", "root", "root");
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, jobId);
             pstmt.executeUpdate();

@@ -35,6 +35,9 @@ public class EmployeeServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case "agregar":
+                request.setAttribute("listaEmpleados",employeeDao.listarEmpleados());
+                request.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
+                request.setAttribute("listaDepartamentos",departmentDao.lista());
                 view = request.getRequestDispatcher("employees/formularioNuevo.jsp");
                 view.forward(request, response);
                 break;
@@ -52,6 +55,9 @@ public class EmployeeServlet extends HttpServlet {
 
                     if (emp != null) {
                         request.setAttribute("empleado", emp);
+                        request.setAttribute("listaEmpleados",employeeDao.listarEmpleados());
+                        request.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
+                        request.setAttribute("listaDepartamentos",departmentDao.lista());
                         view = request.getRequestDispatcher("employees/formularioEditar.jsp");
                         view.forward(request, response);
                     } else {
@@ -116,11 +122,20 @@ public class EmployeeServlet extends HttpServlet {
         employee.setEmail(request.getParameter("email"));
         employee.setPhoneNumber(request.getParameter("phone"));
         employee.setHireDate(request.getParameter("hire_date"));
-        employee.setJobId(request.getParameter("job_id"));
+        Job job = new Job();
+        job.setJobId(request.getParameter("job_id"));
+        employee.setJob(job);
+
         employee.setSalary(new BigDecimal(request.getParameter("salary")));
         employee.setCommissionPct(request.getParameter("commission").equals("") ? null : new BigDecimal(request.getParameter("commission")));
-        employee.setManagerId(Integer.parseInt(request.getParameter("manager_id")));
-        employee.setDepartmentId(Integer.parseInt(request.getParameter("department_id")));
+
+        Employee manager = new Employee();
+        manager.setEmployeeId(Integer.parseInt(request.getParameter("manager_id")));
+        employee.setManager(manager);
+
+        Department department = new Department();
+        department.setDepartmentId(Integer.parseInt(request.getParameter("department_id")));
+        employee.setDepartment(department);
 
         return employee;
 
